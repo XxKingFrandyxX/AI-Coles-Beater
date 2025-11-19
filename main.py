@@ -51,7 +51,7 @@ for elementClass in driverElementsClasses: # This section is for the RESUME INPU
     if elementClass == ".upload-resume-btn.btn.primary-button":
         clickAction.move_to_element(inputter).click().perform()
         time.sleep(1)
-        keyboard.type("C:\\Users\\e\\e\\e\\Resume.docx") # Resume Path PS: YOU NEED ABSOLUTE PATH
+        keyboard.type("C:\\Users\\e\\e\\e\\Empty Resume.txt") # Resume Path PS: YOU NEED ABSOLUTE PATH
         time.sleep(2)
         keyboard.press(Key.enter)
         keyboard.release(Key.enter)
@@ -61,33 +61,23 @@ for elementClass in driverElementsClasses: # This section is for the RESUME INPU
     else:
         clickAction.move_to_element(inputter).click().perform()
 
-
-
-
-
 driverElementsIdAndTexts = {"standard.Cust_StoreMedicalCond": "No",
                             "standard.cust_previousEmp": "No",
                             "standard.cust_CandAvHours": "21-29",
                             "standard.Cust_CurrentStudy": "Not Currently Studying",
                             "standard.Cust_CandLeave.37012": "",
-                            "standard.Cust_TypeofEmpNew": "Part Time",
-                            "standard.Cust_TypeofEmpNew": "Casual",
-                            "standard.Cust_TypeofEmpNew": "Full Time",
+                            "standard.Cust_TypeofEmpNew": "",
                             "standard.Cust_Quals_Lic": "Learners Drivers Permit (L Plates)",
                             "standard.Cust_CandSource": "Google",
                             "standard.Cust_AlterativeStore": "Yes",
                             "standard.Cust_ExpSumary": "",
-                            "standard.Cust_ExpSumary": "",
-                            "standard.Cust_BrandPref": "",
                             "standard.Cust_BrandPref": "",
                             "standard.Cust_AvailabilityMon": "",
-                            "standard.Cust_AvailabilityMon": "",  
-                            "standard.Cust_AvailabilityTues": "",
+                            "standard.Cust_AvailabilityTues": "",    
                             "standard.Cust_AvailabilityWed": "",     
                             "standard.Cust_AvailabilityThurs": "",
                             "standard.Cust_AvailabilityFri": "",
                             "standard.Cust_AvailabilitySat": "",
-
                             "standard.Cust_AvailabilitySun": "",                     
                   } #ALL ID ELEMENTS + TEXT for part 2  
 
@@ -97,57 +87,56 @@ driver.get(f"https://colescareers.com.au/au/en/apply?jobSeqNo=COGRAU172573EXTERN
 def applicationProcedures(timeWorking, type):
     clickAction.move_to_element(inputter).click().perform()
 
-    time.sleep(1.5)
-    keyboard.type(timeWorking + type)
-    keyboard.press(Key.down)
-    keyboard.release(Key.down)
-    keyboard.press(Key.enter)
-    keyboard.release(Key.enter)
+    
+    if timeWorking != "":
+        keyboard.type(timeWorking)
+        time.sleep(0.2)
+        keyboard.press(Key.down)
+        keyboard.release(Key.down)
+        keyboard.press(Key.enter)
+        keyboard.release(Key.enter)
+    elif type != "":
+        keyboard.type(type)
+        time.sleep(0.2)
+        keyboard.press(Key.down)
+        keyboard.release(Key.down)
+        keyboard.press(Key.enter)
+        keyboard.release(Key.enter)
+
     
 
 def applicationProceduresTwo(brandPreference, experience):
-    clickAction.move_to_element(inputter).click().perform()
+    inputter.click()
     if brandPreference != "":
-        print("working")
-        time.sleep(1.5)
         keyboard.type(brandPreference)
-        time.sleep(1)
+        time.sleep(0.5)
         keyboard.press(Key.down)
         keyboard.release(Key.down)
         keyboard.press(Key.enter)
         keyboard.release(Key.enter)
         brandPreference = ""
-    if experience != "":
-        print("working")
-        time.sleep(1.5)
+    elif experience != "":
         keyboard.type(experience)
-        time.sleep(1)
+        time.sleep(0.5)
         keyboard.press(Key.down)
         keyboard.release(Key.down)
         keyboard.press(Key.enter)
         keyboard.release(Key.enter)
         experience = ""
 
+driverElementsClasses = [".btn.primary-button.btn-submit"]
+
 for element, text in driverElementsIdAndTexts.items():
     inputter = driver.find_element(By.ID, element)  
 
-
-
-    while "standard.Cust_Availability" in element:
-        applicationProcedures("Stores - Morning (5am - 12pm)", "")
-        applicationProcedures("Afternoon (12pm - 6pm)", "")
-        applicationProcedures("Stores - Night (6pm - 12am)", "")
-        element = ""
-    
     if element == "standard.Cust_CandLeave.37012":
         inputter.click()
     
-    if text == "Not Currently Studying":
+    elif text == "Not Currently Studying":
         clickAction.move_to_element(inputter).click().perform()
         inputter.send_keys(text)
         inputter.submit()
-
-    if text == "Google":
+    elif text == "Google":
         clickAction.move_to_element(inputter).click().perform()
         inputter.send_keys(text)
         inputter.submit()
@@ -164,42 +153,7 @@ for element, text in driverElementsIdAndTexts.items():
         clickAction.move_to_element(inputter).click().perform()
         inputter.send_keys(text)
         inputter.submit()
-
-
-    while element == "standard.Cust_BrandPref":
-        inputter.click()
-        applicationProceduresTwo("Coles Supermarket", "")
-        inputter.click()
-        applicationProceduresTwo("Coles group", "")
-        applicationProceduresTwo("", "")
-        element = ""
-
-    while element == "standard.Cust_ExpSumary":
-        inputter.click()
-        applicationProceduresTwo("", "Customer Service")
-        inputter.click()
-        applicationProceduresTwo("", "Trolley Collection")
-        applicationProceduresTwo("", "")
-        element = ""
-        # inputter.click()
-        
-        # time.sleep(0.5)
-        # keyboard.type("Customer Service")
-        # keyboard.press(Key.down)
-        # keyboard.release(Key.down)
-        # keyboard.press(Key.enter)
-        # keyboard.release(Key.enter)
-
-        # inputter.click()
-
-        # time.sleep(0.5)
-        # keyboard.type("Trolley Collection")
-        # keyboard.press(Key.down)
-        # keyboard.release(Key.down)
-        # keyboard.press(Key.enter)
-        # keyboard.release(Key.enter)
-
-    if element == "standard.cust_CandAvHours":
+    elif element == "standard.cust_CandAvHours":
         inputter.click()
 
         time.sleep(0.5)
@@ -217,16 +171,38 @@ for element, text in driverElementsIdAndTexts.items():
         inputter.send_keys(text)
         inputter.submit()
 
+    while "standard.Cust_Availability" in element:
+        applicationProcedures("Stores - Morning (5am - 12pm)", "")
+        applicationProcedures("Afternoon (12pm - 6pm)", "")
+        applicationProcedures("Stores - Night (6pm - 12am)", "")
+        element = ""
+
+    while element == "standard.Cust_BrandPref":
+        inputter.click()
+        applicationProceduresTwo("Coles Supermarket", "")
+
+        applicationProceduresTwo("Coles group", "")
+        applicationProceduresTwo("", "")
+        element = ""
+
+    while element == "standard.Cust_ExpSumary":
+        applicationProceduresTwo("", "Customer Service")
+        applicationProceduresTwo("", "Trolley Collection")
+
+        applicationProceduresTwo("", "")
+        element = ""
+
     while element == "standard.Cust_TypeofEmpNew":
         applicationProcedures("", "Part Time")
         applicationProcedures("", "Full Time")
         applicationProcedures("", "Casual")
         element = ""
-    
-    
 
+for elementClass in driverElementsClasses: 
+    inputter = driver.find_element(By.CSS_SELECTOR, elementClass)
+    clickAction.move_to_element(inputter).click().perform()
 
-#basic but can be improved or will be improved 
+       
 print("Do you want to Quit? Yes or No")
 answer = input().lower()
 
